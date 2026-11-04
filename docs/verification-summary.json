@@ -1,0 +1,181 @@
+{
+  "date": "2026-11-04",
+  "environment": "macOS ARM64, Python 3.13.7, Node 22.18.0, npm 10.9.3",
+  "github_actions_executed": false,
+  "linux_runtime_verified": false,
+  "actionlint": "1.7.7: exit 0",
+  "cleanroom": "fresh public source clones and new virtualenvs; shared downloaded browser cache; same macOS host",
+  "linux_native_wheels_downloaded": [
+    "playwright==1.64.1",
+    "greenlet==3.5.6",
+    "psycopg2-binary==2.9.11",
+    "pydantic_core==2.50.2",
+    "MarkupSafe==3.0.4"
+  ],
+  "runs": {
+    "fixed-1": {
+      "totals": {
+        "tests": 35,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 35,
+        "seconds": 16.353
+      },
+      "exit_code": 0,
+      "mode": "fixed",
+      "articles_before_disposal": 0,
+      "database_removed": true,
+      "backend_stopped": true,
+      "temporary_root_removed": true,
+      "browser": {
+        "contexts_created": 8,
+        "contexts_closed": 8,
+        "remaining_processes": 0
+      },
+      "local_evidence": ".runtime/stage5-fixed-1",
+      "sha256": {
+        "results.xml": "6545b224d2f11cc3f534002db1fb543714fa0cd0ce9b0c87565e6a4f64b05c36",
+        "pytest.txt": "407825d9231d6e19580530d475e87612b7b05b5fb0783cccb271a06eebf853f8",
+        "cleanup.json": "7302609f0172c9877632d4433db836b11b91648ab42fc9063a426fe0c56f666f",
+        "run.json": "655c2dbda0472e1e6bd0d15100af60ed1c505f6dddcfac1403a41c1de5abd66d"
+      }
+    },
+    "fixed-2": {
+      "totals": {
+        "tests": 35,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 35,
+        "seconds": 16.03
+      },
+      "exit_code": 0,
+      "mode": "fixed",
+      "articles_before_disposal": 0,
+      "database_removed": true,
+      "backend_stopped": true,
+      "temporary_root_removed": true,
+      "browser": {
+        "contexts_created": 8,
+        "contexts_closed": 8,
+        "remaining_processes": 0
+      },
+      "local_evidence": ".runtime/stage5-fixed-2",
+      "sha256": {
+        "results.xml": "4a9334c24c1fdceccfb3d6eff257c0daff8a15c512c0af3f46bcec8e4ffbbb90",
+        "pytest.txt": "f2b19c152427fedf37800b47c6c0ebd7900a7f1b10016ebb643763dd7bc86391",
+        "cleanup.json": "bf5b2999d14a4afcf2647d5334d511e8a4c97fc19a702f9d06fc327443b5bc7c",
+        "run.json": "40701a9ecb291c6e295a9f0f3f5ee14ee7e9d9457b3faaa88dd5a2624bece847"
+      }
+    },
+    "reverse": {
+      "totals": {
+        "tests": 35,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 35,
+        "seconds": 15.492
+      },
+      "exit_code": 0,
+      "mode": "fixed",
+      "articles_before_disposal": 0,
+      "database_removed": true,
+      "backend_stopped": true,
+      "temporary_root_removed": true,
+      "browser": {
+        "contexts_created": 8,
+        "contexts_closed": 8,
+        "remaining_processes": 0
+      },
+      "local_evidence": ".runtime/stage5-reverse",
+      "sha256": {
+        "results.xml": "577bb491473a12dbdb8ead148fb15eb61aab81b23023164e181e2f7f53e5a7da",
+        "pytest.txt": "e0ba016850e5e1ffd65ae65997fac869b8036173c445d46888d0f0b726736c51",
+        "cleanup.json": "a744cca555af70b9bf53b29142b9c412585f69b69ba61e7aad8772b28d28c60c",
+        "run.json": "9caea45a99d50294e6a97079907931e4400a70386b27df41a94cce0b7758fad1"
+      }
+    },
+    "baseline": {
+      "totals": {
+        "tests": 27,
+        "failures": 5,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 22,
+        "seconds": 5.387
+      },
+      "exit_code": 1,
+      "mode": "baseline",
+      "articles_before_disposal": 0,
+      "database_removed": true,
+      "backend_stopped": true,
+      "temporary_root_removed": true,
+      "browser": null,
+      "local_evidence": ".runtime/stage5-baseline",
+      "sha256": {
+        "results.xml": "8cd2b8cf9426282cddfb6c60e8c4d65ef7f7b549b7f9b093498ceb13ffb3a2af",
+        "pytest.txt": "7147f87201d1469658240da85152a54d3226335c3b45ce1c279dfbf531c9840e",
+        "cleanup.json": "0c0f0915f743a23eb5dc729f973808fdb8d6a2c8368efdf22391b2d9b6e57716",
+        "run.json": "30774e02362ac5b5389951bf757ecaced513c179c00169c16d16e43592e45a3e"
+      }
+    },
+    "diagnostic": {
+      "totals": {
+        "tests": 1,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 0,
+        "seconds": 6.012
+      },
+      "exit_code": 1,
+      "mode": "fixed",
+      "articles_before_disposal": 0,
+      "database_removed": true,
+      "backend_stopped": true,
+      "temporary_root_removed": true,
+      "browser": {
+        "contexts_created": 1,
+        "contexts_closed": 1,
+        "remaining_processes": 0
+      },
+      "local_evidence": ".runtime/stage5-diagnostic",
+      "sha256": {
+        "results.xml": "ed76e255282e94e89cb83f90dd00df156a4ffe1189fd057ce72e71937a1af815",
+        "pytest.txt": "33272dbc916c3ebe67a41f284d69694d8ac62e9f62301a11a851f5d0be4dd8d9",
+        "cleanup.json": "c0231a8a46f6ca3c179656e299d1a69986bab8ca5daee9df77247dfc658a3aec",
+        "run.json": "ca919abbbf82b56ddf79fc35349bb7b9d81741c7e4b0a6789312539599373181"
+      }
+    },
+    "cleanroom": {
+      "totals": {
+        "tests": 35,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 35,
+        "seconds": 20.54
+      },
+      "exit_code": 0,
+      "mode": "fixed",
+      "articles_before_disposal": 0,
+      "database_removed": true,
+      "backend_stopped": true,
+      "temporary_root_removed": true,
+      "browser": {
+        "contexts_created": 8,
+        "contexts_closed": 8,
+        "remaining_processes": 0
+      },
+      "local_evidence": ".runtime/stage5-cleanroom",
+      "sha256": {
+        "results.xml": "b3a95c2c6c5ca33715166a692fbc9a75a995b46eaec2c30649a62432fe3a5e1f",
+        "pytest.txt": "b291d8eb9a60398a2ee342dcde2349615ccb765fa4216094d7b95ac781cc8724",
+        "cleanup.json": "525ff01a42c6b92152636d7144cd651364ebfa72f664d50d912b4272126d1328",
+        "run.json": "ed6cafe1c302520c8e16bc3b631f121c0e756b5cc61aa5180348ee714d08abf4"
+      }
+    }
+  }
+}

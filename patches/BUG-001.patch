@@ -1,0 +1,22 @@
+--- a/config/urls.py
++++ b/config/urls.py
+@@ -20,6 +20,7 @@
+ from django.contrib import admin
+ from django.http import Http404, HttpRequest, HttpResponse
+ from django.urls import path
++from jwt_ninja.errors import APIError
+ from ninja import NinjaAPI
+ from ninja.errors import AuthorizationError, HttpError, ValidationError
+ 
+@@ -28,6 +29,11 @@
+ api_prefix = "api"
+ 
+ api = NinjaAPI()
++
++
++@api.exception_handler(APIError)
++def jwt_api_error_handler(request: HttpRequest, exc: APIError) -> HttpResponse:
++    return api.create_response(request, {"errors": {"token": [exc.error_code]}}, status=exc.http_status_code)
+ 
+ 
+ @api.exception_handler(ValidationError)

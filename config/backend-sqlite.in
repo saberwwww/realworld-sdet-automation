@@ -1,0 +1,17 @@
+# SQLite profile; upstream imports psycopg2 even on SQLite.
+# Replace psycopg2==2.9.6 source distribution with Python 3.13-compatible binary.
+annotated-types==0.6.0
+asgiref==3.8.1
+coreapi==2.3.3
+django==5.2.1
+django-cors-headers==4.3.1
+django-extensions==3.2.3
+django-ninja==1.4.1
+jwtninja
+email-validator==2.1.1
+markdown==3.4.3
+parameterized==0.9.0
+pydantic>=2.9.2
+sqlparse==0.4.4
+typing-extensions>=4.12.2
+psycopg2-binary==2.9.11

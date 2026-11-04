@@ -1,0 +1,69 @@
+name: RealWorld quality tests (local BUG-001 patch)
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      backend_variant:
+        description: 'fixed = local patch; baseline = intentionally exposes upstream BUG-001'
+        type: choice
+        options: [fixed, baseline]
+        default: fixed
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      RUN_DIR: .runtime/ci-run
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.13.7'
+          cache: pip
+          cache-dependency-path: |
+            config/backend-sqlite.lock.txt
+            config/ui-test.lock.txt
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22.18.0'
+          cache: npm
+          cache-dependency-path: config/frontend-package-lock.json
+      - name: Install pinned sources, dependencies, build and Chromium
+        run: |
+          mkdir -p .runtime
+          python scripts/bootstrap.py --with-browser-system-deps 2>&1 | tee .runtime/bootstrap.log
+      - name: Execute real API, UI and database tests
+        env:
+          BACKEND_VARIANT: ${{ inputs.backend_variant || 'fixed' }}
+        run: python scripts/run_tests.py --mode "$BACKEND_VARIANT" --run-dir "$RUN_DIR"
+      - name: Preserve available diagnostics even after failure
+        if: ${{ always() }}
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: realworld-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 7
+          if-no-files-found: warn
+          include-hidden-files: true
+          path: |
+            .runtime/bootstrap.log
+            .runtime/ci-run/*.json
+            .runtime/ci-run/*.xml
+            .runtime/ci-run/*.txt
+            .runtime/ci-run/*.log
+            .runtime/ci-run/database/
+            .runtime/ci-run/browser/
+            .runtime/ci-run/ui-cleanup/
+            .runtime/ci-run/artifacts/

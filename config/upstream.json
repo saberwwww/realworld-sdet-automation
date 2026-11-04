@@ -1,0 +1,13 @@
+{
+  "backend": {
+    "url": "https://github.com/c4ffein/realworld-django-ninja.git",
+    "commit": "87dd078c883a046f5ff20269df2fb004d8b5f83f"
+  },
+  "frontend": {
+    "url": "https://github.com/realworld-apps/vue-realworld-example-app.git",
+    "commit": "db749e3bb1a45755e0a3f4065abaf7346f004f36"
+  },
+  "realworld_spec": {
+    "commit": "25588846c314b15a5e427ffe816e6b4af7be68c7"
+  }
+}

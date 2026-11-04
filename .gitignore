@@ -1,0 +1,29 @@
+# Downloaded third-party code, environments, browser binaries and runtime data
+upstream/
+.venv*/
+.runtime/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+# Raw diagnostics may contain disposable credentials and machine paths.
+# Keep local historical evidence; publish only docs/verification-summary.json.
+evidence/
+output/
+test-results/
+playwright-report/
+*.log
+# Never commit secrets / authentication state
+.env
+.env.*
+!.env.example
+.auth/
+storage-state*.json
+storage_state*.json
+*.pem
+*.key
+.DS_Store
