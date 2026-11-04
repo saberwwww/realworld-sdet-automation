@@ -2,11 +2,11 @@
 
 基于开源 RealWorld Vue3 / Django Ninja 的独立 Python 测试工程。业务系统来自上游；本项目开发测试框架、用例、只读 SQL 校验、隔离环境启动器和 CI 配置。
 
-正式用例 **35 条：27 API + 8 UI**，其中 **5 条包含数据库跨层校验**，不是额外增加 5 条。本地 BUG-001 补丁版本已实际通过全量测试。GitHub Actions 工作流已配置，**尚未在 GitHub 上运行，也未验证 Linux 运行时**。最新实际结果见 [阶段5报告](docs/stage-5.md) 和 [可公开统计](docs/verification-summary.json)。
+正式用例 **35 条：27 API + 8 UI**，其中 **5 条包含数据库跨层校验**，不是额外增加 5 条。本地 BUG-001 补丁版本已实际通过全量测试。GitHub Actions 已在 **Ubuntu 24.04 x86_64 实际运行，35/35 通过，0失败/错误/跳过**。见 [真实云端运行](https://github.com/saberwwww/realworld-sdet-automation/actions/runs/41756762324)；仓库保持 Private。最新实际结果见 [阶段5报告](docs/stage-5.md) 和 [可公开统计](docs/verification-summary.json)。
 
 ## 快速复现
 
-要求 Git、Python **3.13.7**、Node **22.18.0**（配套 npm **10.9.3**），网络可访问 GitHub、PyPI、npm、Playwright 下载源。启动器严格检查版本，避免悄悄使用另一套依赖。macOS ARM64 已验证，CI 目标为 Ubuntu 24.04 x86_64。
+要求 Git、Python **3.13.7**、Node **22.18.0**（配套 npm **10.9.3**），网络可访问 GitHub、PyPI、npm、Playwright 下载源。启动器严格检查版本，避免悄悄使用另一套依赖。macOS ARM64 与 GitHub 托管 Ubuntu 24.04 x86_64 均已实际验证。
 
 在工程根目录：
 
@@ -55,7 +55,7 @@ python3 scripts/run_tests.py --diagnostic ui
 
 [GitHub Actions](.github/workflows/tests.yml) 在 push 到 main/master、PR 或手动触发时使用 Ubuntu 24.04，固定 Python/Node 和 action SHA；安装 Chromium 系统依赖，调用相同 bootstrap/run_tests 入口，always 上传已有证据。测试失败保持非零退出，不跳过认证测试。手动 baseline 模式预期红灯。
 
-本机未安装 Docker/Podman，未新增容器工具。下载 Linux wheels 只能证明包可获取，不代表 Linux 浏览器启动已验证。首次远程运行仍需仓库与 Push 授权；本项目未执行任何远程发布。
+本机未安装 Docker/Podman；已获授权在 Private GitHub 仓库执行真实 CI。首轮27通过、8个UI启动错误，日志定位为 Chromium socket 临时路径过长；仅将启动器临时目录改为 /tmp/rw-*，修复后35/35通过。未修改测试标准、未改动上游源码或提交上游PR。详细失败与修复证据见阶段5报告。
 
 ## 项目导航
 

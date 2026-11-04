@@ -1,5 +1,9 @@
 # 阶段5：CI、可复现性与交付
 
+当前状态：已获授权创建 Private 仓库并完成真实Linux CI验证。下方“本地准备记录”保留授权前结果；最新云端结果见本页末尾“真实GitHub Actions交付”。
+
+## 本地准备记录（授权前历史）
+
 日期：2026-11-04。正式用例仍为27 API + 8 UI，其中5条跨层增强。未新增业务用例、未修改原始业务源码、未修改BUG-001历史证据、未Push/创建PR/部署。
 
 ## 完成范围
@@ -105,3 +109,47 @@ Python锁固定版本但没有全部分发hash；Linux apt包随runner镜像变�
 - [Playwright Python官方CI说明](https://playwright.dev/python/docs/ci)：浏览器与Linux系统依赖安装。
 - [GitHub Actions workflow语法](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)：触发、权限、shell、条件。
 - [Node22.18.0版本说明](https://nodejs.org/en/blog/release/v22.18.0)：固定运行时及配套npm。
+
+
+## 真实GitHub Actions交付（2026-11-04，授权后）
+
+用户明确授权在 saberwwww 创建 Private 仓库、Push main、运行CI以及修复必要工程问题。仓库：https://github.com/saberwwww/realworld-sdet-automation 。API已核验private=true；未向上游提交PR、未部署业务系统。
+
+初始提交856a7f8454a5b25936a68607ed980a6d97582343恰好包含经审核的62个文件；提交前逐文件SHA256与批准清单一致。登录凭据位于macOS keyring，Git提交使用GitHub noreply地址，不提交凭据或原始诊断日志。
+
+| 真实云端运行 | 提交 | 结果 | JUnit时间 |
+| --- | --- | --- | --- |
+| [首轮](https://github.com/saberwwww/realworld-sdet-automation/actions/runs/41756376145) | 856a7f8 | 27通过、0断言失败、8 setup错误、0跳过 | 10.473s |
+| [修复后](https://github.com/saberwwww/realworld-sdet-automation/actions/runs/41756762324) | ad4331f | 35通过、0失败、0错误、0跳过 | 42.820s |
+
+环境：GitHub托管ubuntu-24.04，实际Ubuntu24.04.5，runner镜像20261025.353.1；Python3.13.7、Node22.18.0、完整Chromium156.0.8078.4，Linux x86_64。固定源码下载、Python依赖、npm ci/build及浏览器系统依赖均在远程真实执行。
+
+### Linux故障根因与最小修复
+
+首轮不是8个业务断言失败：27条API全部通过，8条UI在session browser fixture启动时抛出TargetClosedError。浏览器日志给出：
+
+```text
+FATAL:chrome/browser/process_singleton_posix.cc:315
+Socket path too long:
+.../.runtime/ci-run/tmp/org.chromium.Chromium.<random>/SingletonSocket
+```
+
+原启动器将TMPDIR设为仓库内证据目录的tmp子目录；GitHub工作路径较长，Chromium创建Unix socket失败并SIGABRT。后面的CPU频率文件缺失只是崩溃收集日志，不是先发生的根因。本轮浏览器尚未创建page，因此没有UI截图或Trace，证据为浏览器stderr、pytest、JUnit及后端日志；always上传成功。
+
+修复只修改 scripts/run_tests.py：改用 tempfile.mkdtemp(prefix="rw-", dir="/tmp") 创建本轮独占短目录，结束仍删除该目录，并在run.json记录实际临时路径及删除结果。不是共享固定目录，也不删除/tmp本身。不改业务代码、不更换Chromium通道、不跳过或放宽任何用例。
+
+本地修复后35/35通过（16.448s），随后推送ad4331f，真实Linux35/35通过，证明相同环境下路径修复解决浏览器启动根因。全部tests/、pytest.ini、BUG-001记录及patch相对于初始提交保持不变。
+
+### 云端报告和清理核对
+
+下载JUnit逐条核对：27个API实例、8个UI实例；summary.json与XML一致，pytest退出0。run.json中的github_actions=true。后端/前端进程停止，数据库已销毁，销毁前文章0；8个context创建/关闭一致，browser已断连、无该浏览器目录残留进程，/tmp/rw-*已删除。5条数据库增强包含于35条，不另计。
+
+原始证据保存在本机 evidence/github-actions/<run_id>/：actions.log、run-metadata.json、下载的artifact、sha256-manifest.json；成功轮额外audit.json。公开统计位于verification-summary.json，不提交可能带临时凭据的原始Trace/日志。GitHub artifact保留7天，已额外下载本机存档避免到期丢失。
+
+本次非阻塞告警：固定upload-artifact action被runner提示Node20弃用并强制使用Node24；两轮实际上传成功。没有为消除告警任意升级action或依赖。另一次本地gh监控网络EOF，重新查询后确认远程仍运行；不将监控连接故障记作测试失败。
+
+实际执行 gh repo create --private、git push、gh run view --log、gh run download；Push自动触发工作流，没有额外重复dispatch。后续仅同步真实交付文档，再核验最终main的CI，原始首轮失败记录保留。
+
+### 最终边界
+
+已满足本项目约定的测试工程交付范围：可复现安装、35条真实Linux自动化、数据库隔离、缺陷补丁闭环、失败证据上传及原始日志存档。仓库保持Private；BUG-001仍是本地补丁，不代表上游合并。不将一次或少量云端通过解释为长期稳定性、全业务覆盖或生产就绪。

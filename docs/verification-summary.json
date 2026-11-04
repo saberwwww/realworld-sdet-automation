@@ -1,8 +1,8 @@
 {
   "date": "2026-11-04",
   "environment": "macOS ARM64, Python 3.13.7, Node 22.18.0, npm 10.9.3",
-  "github_actions_executed": false,
-  "linux_runtime_verified": false,
+  "github_actions_executed": true,
+  "linux_runtime_verified": true,
   "actionlint": "1.7.7: exit 0",
   "cleanroom": "fresh public source clones and new virtualenvs; shared downloaded browser cache; same macOS host",
   "linux_native_wheels_downloaded": [
@@ -177,5 +177,48 @@
         "run.json": "ed6cafe1c302520c8e16bc3b631f121c0e756b5cc61aa5180348ee714d08abf4"
       }
     }
-  }
+  },
+  "cloud_runs": [
+    {
+      "run_url": "https://github.com/saberwwww/realworld-sdet-automation/actions/runs/41756376145",
+      "commit": "856a7f8454a5b25936a68607ed980a6d97582343",
+      "conclusion": "failure",
+      "totals": {
+        "tests": 35,
+        "failures": 0,
+        "errors": 8,
+        "skipped": 0,
+        "passed": 27,
+        "seconds": 10.473
+      },
+      "sha256": {
+        "results.xml": "5481696d31f6a6d5e75adbe92b36177a11328d3e94ba61fdde17844fea896e38",
+        "summary.json": "fd51c26409c1d06583f0026e484c0f7f1e9373ddd21b59cd533cc676a91fbc0b",
+        "cleanup.json": "d4fd1b53a0939161c0034d48d6b0ff1967af5a33619cba298b754c5e0a1fedfa",
+        "run.json": "d56ee213b02a71dc5efe8a866e6d0d214a7b955a28f922e307f31c2e418c3524"
+      },
+      "local_evidence": "evidence/github-actions/41756376145"
+    },
+    {
+      "run_url": "https://github.com/saberwwww/realworld-sdet-automation/actions/runs/41756762324",
+      "commit": "ad4331fc1e6360a3fd50065098759d29cc5d114d",
+      "conclusion": "success",
+      "totals": {
+        "tests": 35,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 35,
+        "seconds": 42.82
+      },
+      "sha256": {
+        "results.xml": "139c65434ea2c3ece97b895d882273d8a3219d4cc9f9ee7dbd86713b6d6934b1",
+        "summary.json": "0fbf66e32c5ed88a4fc5c3cbc1ea57be57cb463b70bc83ef4b31585f4e2dd3ed",
+        "cleanup.json": "fdcdd395addcbf268849e291a202151c6f2087c34d78a97b6c5c6f58c1dc7cfa",
+        "run.json": "22b242b27f5eed868aafa7cbdfe48248a035973d29169a213b1ada15f7417e1c"
+      },
+      "local_evidence": "evidence/github-actions/41756762324"
+    }
+  ],
+  "cloud_cleanup_verified": true
 }

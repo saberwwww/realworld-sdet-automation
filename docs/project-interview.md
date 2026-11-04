@@ -2,7 +2,7 @@
 
 ## 一分钟介绍
 
-“我基于开源 RealWorld 的 Vue3 前端和 Django Ninja 后端，独立开发了 Python 自动化测试工程。正式有27条接口和8条UI测试，其中5条结合SQLite检查持久化结果。fixture会创建临时数据库和独立用户，UI每次使用新的浏览器context，结束后清理文章、进程和数据库。我通过无效Token用例发现500，结合服务端堆栈定位到JWT库异常没有被主API处理，在临时源码副本应用最小补丁，再对认证边界和全部业务回归。最后编写GitHub Actions配置，复用本地启动器并保留JUnit、截图和Trace。目前本地验证通过，远程CI尚未运行。”
+“我基于开源 RealWorld 的 Vue3 前端和 Django Ninja 后端，独立开发了 Python 自动化测试工程。正式有27条接口和8条UI测试，其中5条结合SQLite检查持久化结果。fixture会创建临时数据库和独立用户，UI每次使用新的浏览器context，结束后清理文章、进程和数据库。我通过无效Token用例发现500，结合服务端堆栈定位到JWT库异常没有被主API处理，在临时源码副本应用最小补丁，再对认证边界和全部业务回归。最后编写GitHub Actions配置，复用本地启动器并保留JUnit、截图和Trace。目前本地与真实Linux CI均35/35通过；首次云端运行暴露Chromium socket路径过长，调整临时目录后回归通过。”
 
 ## 你具体开发了什么？
 
@@ -28,13 +28,13 @@ baseline会真实失败；fixed在每轮临时源码应用同一patch。上游ch
 
 ## UI为什么容易不稳定，如何定位？
 
-browser是浏览器实例，context是独立会话，page是标签页。语义定位和expect自动等待代替固定sleep；登录同时验证真实请求与用户名/导航变化。失败先看pytest具体断言，再看截图和Trace的action/DOM/network。Headless Shell的点击超时是当前环境实际问题，完整Chromium稳定，所以固定channel而不是降低断言。不能由macOS结果推断Linux完全相同。
+browser是浏览器实例，context是独立会话，page是标签页。语义定位和expect自动等待代替固定sleep；登录同时验证真实请求与用户名/导航变化。失败先看pytest具体断言，再看截图和Trace的action/DOM/network。Headless Shell的点击超时是当前环境实际问题，完整Chromium稳定，所以固定channel而不是降低断言。不能由macOS结果推断Linux完全相同：首次Linux启动失败由TMPDIR路径过长导致；修改为/tmp下独立短路径后，完整Chromium及全部断言保持不变并通过回归。
 
 ## CI到底验证到了什么？
 
-工作流固定Ubuntu、Python、Node和action SHA；bootstrap安装，fixture启动服务及迁移，run_tests输出JUnit与汇总，always上传证据。bash的pipefail让安装命令失败不被tee吞掉。正式job不使用continue-on-error。展示本地实际结果，并明确GitHub托管runner尚未执行；workflow语法检查不是远程绿灯。
+工作流固定Ubuntu、Python、Node和action SHA；bootstrap安装，fixture启动服务及迁移，run_tests输出JUnit与汇总，always上传证据。bash的pipefail让安装命令失败不被tee吞掉。正式job不使用continue-on-error。展示GitHub真实run链接、commit及下载的JUnit：27 API+8 UI、0跳过，核对清理证据；workflow语法检查本身不等于远程绿灯。
 
-固定版本不代表完全可复现：Python锁目前没有全部分发哈希，apt系统包会变，外网下载可能失败，Linux尚待实跑；固定commit与npm integrity减少漂移但不是供应链完整证明。
+固定版本不代表完全可复现：Python锁目前没有全部分发哈希，apt系统包会变，外网下载可能失败，已验证的Linux runner镜像以后仍可能变化；固定commit与npm integrity减少漂移但不是供应链完整证明。
 
 ## 现场应能独立写出的代码
 
