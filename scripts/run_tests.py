@@ -9,6 +9,7 @@ import shutil
 import signal
 import subprocess
 import sys
+import tempfile
 
 from summarize_junit import summarize
 
@@ -45,8 +46,9 @@ def main():
     if out.exists():
         raise SystemExit(f"Refusing to overwrite existing evidence: {out}")
     out.mkdir(parents=True)
-    temporary = out / "tmp"
-    temporary.mkdir()
+    # Chromium Unix sockets cannot use the long GitHub workspace path.
+    # mkdtemp creates a private, unique directory; only this invocation removes it.
+    temporary = Path(tempfile.mkdtemp(prefix="rw-", dir="/tmp"))
     command = [str(ROOT / ".venv-test/bin/python"), "-m", "pytest", "-v",
                f"--backend-variant={args.mode}", f"--evidence-dir={out}",
                f"--junitxml={out / 'results.xml'}", f"--output={out / 'artifacts'}"]
@@ -82,6 +84,7 @@ def main():
         signal.signal(signal.SIGTERM, previous)
         # This directory was created solely by this invocation; never delete a user DB.
         shutil.rmtree(temporary)
+        metadata["temporary_root"] = str(temporary)
         metadata["temporary_root_removed"] = not temporary.exists()
         if (out / "results.xml").exists():
             try:
