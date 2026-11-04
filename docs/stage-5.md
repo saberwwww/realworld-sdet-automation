@@ -1,6 +1,6 @@
 # 阶段5：CI、可复现性与交付
 
-当前状态：已获授权创建 Private 仓库并完成真实Linux CI验证。下方“本地准备记录”保留授权前结果；最新云端结果见本页末尾“真实GitHub Actions交付”。
+当前状态：仓库现由所有者改为Public（本次API核验private=false）；阶段5最终核验为提交1eae971、运行41757249223，35/35通过。历史发布时为Private，以下当时状态和失败/修复结果保留。下方“本地准备记录”保留授权前结果；最新云端结果见本页末尾“真实GitHub Actions交付”。
 
 ## 本地准备记录（授权前历史）
 
@@ -113,7 +113,7 @@ Python锁固定版本但没有全部分发hash；Linux apt包随runner镜像变�
 
 ## 真实GitHub Actions交付（2026-11-04，授权后）
 
-用户明确授权在 saberwwww 创建 Private 仓库、Push main、运行CI以及修复必要工程问题。仓库：https://github.com/saberwwww/realworld-sdet-automation 。API已核验private=true；未向上游提交PR、未部署业务系统。
+用户明确授权在 saberwwww 创建 Private 仓库、Push main、运行CI以及修复必要工程问题。仓库：https://github.com/saberwwww/realworld-sdet-automation 。发布当时API核验private=true（历史状态）；未向上游提交PR、未部署业务系统。
 
 初始提交856a7f8454a5b25936a68607ed980a6d97582343恰好包含经审核的62个文件；提交前逐文件SHA256与批准清单一致。登录凭据位于macOS keyring，Git提交使用GitHub noreply地址，不提交凭据或原始诊断日志。
 
@@ -121,6 +121,7 @@ Python锁固定版本但没有全部分发hash；Linux apt包随runner镜像变�
 | --- | --- | --- | --- |
 | [首轮](https://github.com/saberwwww/realworld-sdet-automation/actions/runs/41756376145) | 856a7f8 | 27通过、0断言失败、8 setup错误、0跳过 | 10.473s |
 | [修复后](https://github.com/saberwwww/realworld-sdet-automation/actions/runs/41756762324) | ad4331f | 35通过、0失败、0错误、0跳过 | 42.820s |
+| [阶段5最终main核验](https://github.com/saberwwww/realworld-sdet-automation/actions/runs/41757249223) | 1eae971 | 35通过、0失败、0错误、0跳过 | 47.520s |
 
 环境：GitHub托管ubuntu-24.04，实际Ubuntu24.04.5，runner镜像20261025.353.1；Python3.13.7、Node22.18.0、完整Chromium156.0.8078.4，Linux x86_64。固定源码下载、Python依赖、npm ci/build及浏览器系统依赖均在远程真实执行。
 
@@ -148,8 +149,17 @@ Socket path too long:
 
 本次非阻塞告警：固定upload-artifact action被runner提示Node20弃用并强制使用Node24；两轮实际上传成功。没有为消除告警任意升级action或依赖。另一次本地gh监控网络EOF，重新查询后确认远程仍运行；不将监控连接故障记作测试失败。
 
-实际执行 gh repo create --private、git push、gh run view --log、gh run download；Push自动触发工作流，没有额外重复dispatch。后续仅同步真实交付文档，再核验最终main的CI，原始首轮失败记录保留。
+实际执行 gh repo create --private、git push、gh run view --log、gh run download；Push自动触发工作流，没有额外重复dispatch。随后同步真实交付文档，提交1eae971f9606e117ba6079465858b9057d0afc37触发运行41757249223；最终main再次35/35通过，原始首轮失败记录保留。
 
 ### 最终边界
 
-已满足本项目约定的测试工程交付范围：可复现安装、35条真实Linux自动化、数据库隔离、缺陷补丁闭环、失败证据上传及原始日志存档。仓库保持Private；BUG-001仍是本地补丁，不代表上游合并。不将一次或少量云端通过解释为长期稳定性、全业务覆盖或生产就绪。
+已满足本项目约定的测试工程交付范围：可复现安装、35条真实Linux自动化、数据库隔离、缺陷补丁闭环、失败证据上传及原始日志存档。阶段5交付当时仓库为Private，现由所有者改为Public；BUG-001仍是本地补丁，不代表上游合并。不将一次或少量云端通过解释为长期稳定性、全业务覆盖或生产就绪。
+
+
+## 公开展示复核（2026-11-04）
+
+本次仅修正文档和核验摘要；测试代码、断言、pytest配置、工作流及BUG-001补丁不变。补充最终运行41757249223对应的完整提交、JUnit统计及文件哈希；不覆盖首轮27通过/8个setup错误和修复后35通过的历史记录。
+
+范围：当前62个跟踪文件、与origin同步的Git历史66个文件对象、前三轮已下载CI证据中的93个文本文件。对GitHub/AWS/provider密钥、私钥头、JWT、带凭据URL进行定向扫描，未发现匹配；源码树无evidence、output、.runtime、upstream或数据库/日志/压缩诊断文件。此结论是本次检查范围内未发现真实凭据，不是对任何未来日志的无条件保证。原始检查记录在本机evidence/publication/public-review/，不纳入公开源码。
+
+根目录LICENSE暂未添加；第三方MIT副本及来源保留，项目自身许可选项见THIRD_PARTY_NOTICES.md。公开展示不自动赋予任意复用授权。本次文档提交后执行一次真实CI，结果在对应提交的GitHub Actions页面及本地归档中记录。

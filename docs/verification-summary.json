@@ -218,7 +218,49 @@
         "run.json": "22b242b27f5eed868aafa7cbdfe48248a035973d29169a213b1ada15f7417e1c"
       },
       "local_evidence": "evidence/github-actions/41756762324"
+    },
+    {
+      "run_url": "https://github.com/saberwwww/realworld-sdet-automation/actions/runs/41757249223",
+      "commit": "1eae971f9606e117ba6079465858b9057d0afc37",
+      "conclusion": "success",
+      "totals": {
+        "tests": 35,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 35,
+        "seconds": 47.52
+      },
+      "sha256": {
+        "results.xml": "0fba80da10ab11aead01217ae89eef78c3575418715038b38f826cb5b1aeed0c",
+        "summary.json": "64d9bacb79992210d939c724ad648efebbd9d9541bf32689d8832b29b557ac4d",
+        "cleanup.json": "4b46d039f96f0e4b56931c711de547bd5e55bdd3172cf86f7e61f546a2ae62b3",
+        "run.json": "006bc4f82d6dede89511d9b8d1c62c3c8ac2df2f84b750c40f933ad82032d645"
+      },
+      "local_evidence": "evidence/github-actions/41757249223"
     }
   ],
-  "cloud_cleanup_verified": true
+  "cloud_cleanup_verified": true,
+  "stage_5_final_verification": {
+    "run_url": "https://github.com/saberwwww/realworld-sdet-automation/actions/runs/41757249223",
+    "commit": "1eae971f9606e117ba6079465858b9057d0afc37",
+    "api": 27,
+    "ui": 8,
+    "database_cross_layer_included": 5,
+    "totals": {
+      "tests": 35,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 35,
+      "seconds": 47.52
+    },
+    "cleanup_verified": true
+  },
+  "repository_status": {
+    "url": "https://github.com/saberwwww/realworld-sdet-automation",
+    "visibility": "public",
+    "checked_date": "2026-11-04",
+    "note": "Stage 5 publication and original verification occurred while private; owner subsequently made repository public."
+  }
 }

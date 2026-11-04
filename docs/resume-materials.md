@@ -12,6 +12,6 @@
 
 不得删去“基于开源”与“独立测试工程”的区别。5条SQL增强包含于35条，不是40条；不是企业项目、上线系统或上游已合并修复。没有业务用户量、团队规模、性能提升比例或测试效率百分比的证据，不写这些数字。
 
-简历篇幅不足时可合并第2/4条。可写“真实Linux CI全量35/35通过”，不能将少量运行夸大为长期稳定性结论。[已验证运行](https://github.com/saberwwww/realworld-sdet-automation/actions/runs/41756762324)，对应提交ad4331fc1e6360a3fd50065098759d29cc5d114d，报告和日志已下载留存。
+简历篇幅不足时可合并第2/4条。可写“真实Linux CI全量35/35通过”，不能将少量运行夸大为长期稳定性结论。[已验证运行](https://github.com/saberwwww/realworld-sdet-automation/actions/runs/41757249223)，对应阶段5最终提交1eae971f9606e117ba6079465858b9057d0afc37，报告和日志已下载留存。
 
 面试时展示 docs/verification-summary.json、测试核心函数及本地报告，避免公开包含Token的原始Trace。本人需要能够独立解释代码，不能只背这四条文字。
